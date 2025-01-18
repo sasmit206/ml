@@ -1,4 +1,3 @@
-'''
 class LinearRegressionScratch:
     def fit(self, X, y):
         X_with_intercept = np.column_stack([np.ones(len(X)), X])
@@ -44,4 +43,4 @@ rmse = np.sqrt(model.mse(y_test, y_pred))
 
 print(f"R-squared Value: {r2:.4f}")
 print(f"Root Mean Square Error: ${rmse:,.2f}")
-'''
+
