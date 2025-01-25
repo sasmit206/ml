@@ -1,4 +1,4 @@
-'''bash
+''' bash
 import numpy as np
 import pandas as pd
 import pandas as pd
@@ -53,4 +53,4 @@ model = Logistic(lr=0.01, iter_nos=1000)
 model.fit(X, y)
 accuracy = model.evaluate(X, y)
 print("Model Accuracy:", accuracy)
-'''
+
