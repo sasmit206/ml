@@ -1,0 +1,54 @@
+import numpy as np
+import pandas as pd
+import pandas as pd
+import numpy as np
+
+data = pd.read_csv("Titanic-Dataset.csv")
+columns = [col for col in data.columns if col != "Survived"]
+features = data[columns]
+
+features_encoded = pd.get_dummies(features)
+
+# Convert to NumPy array with float type
+X = features_encoded.values.astype(float)
+y = data["Survived"].values
+
+class Logistic:
+    def __init__(self, lr=0.05, iter_nos=1000):
+        self.lr = lr
+        self.iter_nos = iter_nos
+        self.weights = None
+        self.bias = None
+    
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+    
+    def fit(self, X, y):
+        samples_no, features_no = X.shape
+        self.weights = np.zeros(features_no)
+        self.bias = 0
+        
+        for _ in range(self.iter_nos):
+            linear_eq = np.dot(X, self.weights) + self.bias
+            predictions = self.sigmoid(linear_eq)
+            
+            dw = (1 / samples_no) * np.dot(X.T, (predictions - y))
+            db = (1 / samples_no) * np.sum(predictions - y)
+            
+            self.weights -= self.lr * dw
+            self.bias -= self.lr * db
+    
+    def predict(self, X):
+        linear_eq = np.dot(X, self.weights) + self.bias
+        probabilities = self.sigmoid(linear_eq)
+        return [1 if prob >= 0.5 else 0 for prob in probabilities]
+    
+    def evaluate(self, X, y):
+        predictions = self.predict(X)
+        accuracy = np.mean(predictions == y)
+        return accuracy
+
+model = Logistic(lr=0.01, iter_nos=1000)
+model.fit(X, y)
+accuracy = model.evaluate(X, y)
+print("Model Accuracy:", accuracy)
