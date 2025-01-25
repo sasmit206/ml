@@ -1,3 +1,5 @@
+import numpy as np
+
 class LinearRegressionScratch:
     def fit(self, X, y):
         X_with_intercept = np.column_stack([np.ones(len(X)), X])
